@@ -1,7 +1,9 @@
 import os
-import random
 
 import cherrypy
+
+import global_variables
+import strategy
 
 """
 This is a simple Battlesnake server written in Python.
@@ -30,7 +32,10 @@ class Battlesnake(object):
         # This function is called everytime your snake is entered into a game.
         # cherrypy.request.json contains information about the game that's about to be played.
         data = cherrypy.request.json
-
+        print(f"New game started ~~~{data['game']['id']}")
+        global_variables.BOARD_MAXIMUM_X = data["board"]["width"] - 1
+        global_variables.BOARD_MAXIMUM_Y = data["board"]["height"] - 1
+        global_variables.GAME_ON = True
         print("START")
         return "ok"
 
