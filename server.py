@@ -48,8 +48,8 @@ class Battlesnake(object):
         # TODO: Use the information in cherrypy.request.json to decide your next move.
         data = cherrypy.request.json
 
-        your_health = data["board"]["health"]
-        your_body = data["board"]["body"]
+        your_health = data["you"]["health"]
+        your_body = data["you"]["body"]
         snakes = data["board"]["snakes"]
         print(f"Data in move: {data}")
         while global_variables.GAME_ON and your_health > 0:
