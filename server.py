@@ -48,12 +48,17 @@ class Battlesnake(object):
         # TODO: Use the information in cherrypy.request.json to decide your next move.
         data = cherrypy.request.json
 
-        # Choose a random direction to move in
-        possible_moves = ["up", "down", "left", "right"]
-        move = random.choice(possible_moves)
-
-        print(f"MOVE: {move}")
-        return {"move": move}
+        your_health = data["board"]["health"]
+        your_body = data["board"]["body"]
+        snakes = data["board"]["snakes"]
+        print(f"Data in move: {data}")
+        while global_variables.GAME_ON and your_health > 0:
+            move = strategy.choose_move_chaos(data)
+            safe = strategy.validate_move(your_body,snakes,move)
+            if safe:
+                break
+        print(f"FINAL MOVE: {move}")
+        return {"move": move,"shout":"Yes! Daddy"}
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
